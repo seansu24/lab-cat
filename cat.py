@@ -1,11 +1,15 @@
-'''
-This program prints stdin to the screen.
-'''
 import sys
 
-def cat(file):
-    data = file.read()
-    sys.stdout.buffer.write(data)
+def cat(file, chunk_size=8192):
+    """
+    Read from the file object in chunks and write to stdout.
+    This ensures O(1) memory usage relative to the file size.
+    """
+    while True:
+        chunk = file.read(chunk_size)
+        if not chunk:
+            break
+        sys.stdout.buffer.write(chunk)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
